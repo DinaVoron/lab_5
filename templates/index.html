@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <form action="{{url_for_index}}">
+        <p>
+            <label>Введите размер матрицы:
+                <input type="text" name="size" value="{{size}}">
+            </label>
+        </p>
+        <p>
+            <input type="submit" value="Показать">
+        </p>
+        <p>
+            <label>Выберите действия:
+                {% if mul %}
+                <input type="checkbox" checked name="mul">Умножить
+                {% else %}
+                <input type="checkbox" name="mul">Умножить
+                {% endif %}
+                {% if add %}
+                    <input type="checkbox" checked name="add">Сложить
+                {% else %}
+                    <input type="checkbox" name="add">Сложить
+                {% endif %}
+                {% if sub %}
+                <input type="checkbox" checked name="sub">Вычесть
+                {% else %}
+                <input type="checkbox" name="sub">Вычесть
+                {% endif %}
+            </label>
+        </p>
+        <div class="first-matrix">
+        {% for i in range(size) %}
+            {% for j in range(size) %}
+            <input type="number" name="1_{{i}}_{{j}}" value="{{matrix_first[i][j]}}">
+            {% endfor %}
+            <br>
+        {% endfor %}
+        </div><br>
+        <div class="second-matrix">
+            {% for i in range(size) %}
+                {% for j in range(size) %}
+                <input type="number" name="2_{{i}}_{{j}}" value="{{matrix_second[i][j]}}">
+                {% endfor %}
+                <br>
+            {% endfor %}
+        </div><br>
+        <input type="submit" name="build" value="Вычислить">
+        <input type="submit" name="reset" value="Очистить">
+    </form>
+    {% if add or mul or sub %}
+    <p>Результат:
+        <ul>
+            {% if add %}
+            <li>Сложения:</li>
+                {% for i in range(size) %}
+                {% for j in range(size) %}
+                <input type="number" value="{{add_matrix[i][j]}}">
+                {% endfor %}
+                <br>
+                {% endfor %}
+            {% endif %}
+            {% if sub %}
+            <li>Вычитания:</li>
+                {% for i in range(size) %}
+                {% for j in range(size) %}
+                <input type="number" value="{{sub_matrix[i][j]}}">
+                {% endfor %}
+                <br>
+                {% endfor %}
+            {% endif %}
+            {% if mul %}
+            <li>Умножения:</li>
+                {% for i in range(size) %}
+                {% for j in range(size) %}
+                <input type="number" value="{{mul_matrix[i][j]}}">
+                {% endfor %}
+                <br>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </p>
+    {% endif %}
+    </body>
+</html>
